@@ -126,18 +126,52 @@
         }
 
 
-        .box
+        .box_historico {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            /* height: 737px; */
+            margin-top: 50px;
+            /* background-color: blue; */
+        }
         .desenrola-bati-joga-de-ladinho {
             display: flex;
+            width: 100%;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            width: 736px;
-            height: 737px;
-            padding-right: 50px;
-            background-color: blue;
+            /* background-color: white; */
         }
 
+        .aparecer {
+            display: block;
+        }
+
+        .hr-tag {
+            width: 100%;
+            height: 2px;
+            background-color: #8d8d8d;
+            border: none;
+        }
+        
+        .baixar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 136.87017822265625px;
+            height: 27px;
+            border: black;
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: #3B82F6;
+        }
+        .baixar p {
+            font-family: 'Poppins' Regular;
+            font-size: 18px;
+            font-weight: 400;
+            
+            color: #ffff;
+        }
     </style>
 </head>
 <body>
@@ -169,7 +203,7 @@
         <h6>
             Veja o seu historico de transcrições abaixo
         </h6>
-        <div>
+        <div class="box_historico">
             <div class="desenrola-bati-joga-de-ladinho">
                 <p>
                     Nome do arquivo
@@ -178,8 +212,19 @@
                     Data
                 </p>
                 <br>
+                <br>
             </div>
-
+            <hr class="hr-tag">
+            <div class="aparecer">
+                <div class="desenrola-bati-joga-de-ladinho">
+                <p>arquivo.mp3</p>
+                <p>10/04/2003</p>
+                <div class="baixar">
+                    <p>Baixar</p>
+                </div>
+                
+            </div>
+            </div>
         </div>
     </div>
     <div class="footer">
