@@ -229,6 +229,10 @@
             input {
                 width: 100%;
                 height: 10vb;
+                font-weight: 400;
+                font-family: 'Poppins', Regular;
+                font-size: 16px;
+                padding-bottom: 50px;
                 padding: 10px;
                 margin-top: 10px;
                 border: 1px solid #000000;
@@ -279,9 +283,15 @@
             </svg>
             
         <div class="navbar-items-principais">
-            <p>Início</p>
-            <p>Historico</p>
-            <p>Contato</p>
+            <div id="inicioButton">
+                <p >Início</p>
+            </div>
+            <div id="historicoButton">
+                <p >Historico</p>
+            </div>
+            <div>
+                <p>Contato</p>
+            </div>           
         </div>
         <div  class="buttons">
             <p id="loginButton">Login</p>
@@ -356,6 +366,20 @@
         if (loginButton) {
             loginButton.addEventListener('click', function() {
                 window.location.href = 'login.html';
+            });
+        }
+
+        const inicioButton = document.getElementById('inicioButton');
+        if (inicioButton) {
+            inicioButton.addEventListener('click', function() {
+                window.location.href = 'home.html';
+            });
+        }
+
+        const historicoButton = document.getElementById('historicoButton');
+        if (historicoButton) {
+            historicoButton.addEventListener('click', function() {
+                window.location.href = 'historico_transacoes.html';
             });
         }
         // Prevenir comportamentos padrão para drag and drop

@@ -125,12 +125,17 @@
             margin-bottom: 20px;
         }
 
+
+        .box
         .desenrola-bati-joga-de-ladinho {
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: space-around;
-            margin-top: 20px;
+            justify-content: space-between;
+            width: 736px;
+            height: 737px;
+            padding-right: 50px;
+            background-color: blue;
         }
 
     </style>
@@ -143,9 +148,15 @@
             </svg>
             
         <div class="navbar-items-principais">
-            <p>Início</p>
-            <p>Historico</p>
-            <p>Contato</p>
+            <div id="inicioButton">
+                <p >Início</p>
+            </div>
+            <div id="historicoButton">
+                <p >Historico</p>
+            </div>
+            <div>
+                <p>Contato</p>
+            </div>        
         </div>
         <div  class="buttons">
             <p id="loginButton">Login</p>
@@ -158,17 +169,152 @@
         <h6>
             Veja o seu historico de transcrições abaixo
         </h6>
-        <p>
-            Nome do arquivo
-        </p>
-        <p>
-            Data
-        </p>
+        <div>
+            <div class="desenrola-bati-joga-de-ladinho">
+                <p>
+                    Nome do arquivo
+                </p>
+                <p>
+                    Data
+                </p>
+                <br>
+            </div>
+
+        </div>
     </div>
     <div class="footer">
         <p>
             ©2025 Audio Converter - Todos os direitos reservados
         </p>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.querySelector('.browse-btn');
+
+        // Adicione este trecho para o redirecionamento
+        const loginButton = document.getElementById('loginButton');
+        if (loginButton) {
+            loginButton.addEventListener('click', function() {
+                window.location.href = 'login.html';
+            });
+        }
+
+        const inicioButton = document.getElementById('inicioButton');
+        if (inicioButton) {
+            inicioButton.addEventListener('click', function() {
+                window.location.href = 'home.html';
+            });
+        }
+
+        const historicoButton = document.getElementById('historicoButton');
+        if (historicoButton) {
+            historicoButton.addEventListener('click', function() {
+                window.location.href = 'historico_transacoes.html';
+            });
+        }
+        // Prevenir comportamentos padrão para drag and drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Efeitos visuais ao arrastar arquivo
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropZone.classList.add('highlight');
+        }
+
+        function unhighlight() {
+            dropZone.classList.remove('highlight');
+        }
+
+        // Lidar com arquivos soltos
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        // Lidar com seleção via botão
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function() {
+            handleFiles(this.files);
+        });
+
+        // Função para processar os arquivos (será expandida posteriormente)
+        function handleFiles(files) {
+            if (files.length) {
+                const file = files[0];
+                
+                // Verificar se é um arquivo de áudio
+                if (!file.type.match('audio.*')) {
+                    alert('Por favor, selecione um arquivo de áudio.');
+                    return;
+                }
+                
+                console.log('Arquivo selecionado:', file.name);
+                
+                // Aqui você pode adicionar a lógica para enviar para a API
+                // uploadToAPI(file);
+                
+                // Feedback visual
+                dropZone.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <h1>Arquivo pronto para processamento</h1>
+                    <p>${file.name}</p>
+                    <button class="browse-btn">Selecionar outro arquivo</button>
+                `;
+                
+                // Re-adicionar o event listener ao novo botão
+                document.querySelector('.browse-btn').addEventListener('click', () => {
+                    fileInput.click();
+                });
+            }
+        }
+
+        // Função para enviar para a API (exemplo)
+        async function uploadToAPI(file) {
+            const formData = new FormData();
+            formData.append('audio', file);
+            
+            try {
+                const response = await fetch('SUA_API_AQUI', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                console.log('Resposta da API:', data);
+                
+                // Aqui você pode lidar com a resposta da API (ex: mostrar a transcrição)
+                
+            } catch (error) {
+                console.error('Erro ao enviar arquivo:', error);
+                alert('Ocorreu um erro ao enviar o arquivo.');
+            }
+        }
+    });
+    </script>
 </body>
 </html>

@@ -209,9 +209,15 @@
             </svg>
             
         <div class="navbar-items-principais">
-            <p>Início</p>
-            <p>Historico</p>
-            <p>Contato</p>
+            <div id="inicioButton">
+                <p >Início</p>
+            </div>
+            <div id="historicoButton">
+                <p >Historico</p>
+            </div>
+            <div>
+                <p>Contato</p>
+            </div>        
         </div>
         <div  class="buttons">
             <p id="loginButton">Login</p>
@@ -260,6 +266,20 @@
         if (loginButton2) {
             loginButton2.addEventListener('click', function() {
                 window.location.href = 'login.html';
+            });
+        }
+
+        const inicioButton = document.getElementById('inicioButton');
+        if (inicioButton) {
+            inicioButton.addEventListener('click', function() {
+                window.location.href = 'home.html';
+            });
+        }
+
+        const historicoButton = document.getElementById('historicoButton');
+        if (historicoButton) {
+            historicoButton.addEventListener('click', function() {
+                window.location.href = 'historico_transacoes.html';
             });
         }
         // Prevenir comportamentos padrão para drag and drop
