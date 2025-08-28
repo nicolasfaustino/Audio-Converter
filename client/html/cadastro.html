@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastros</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        /* Reset CSS: isso deve estar fora de qualquer seletor */
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+            background-color: #F8F9FA; /* corrigido */
+            min-height: 100vh;       /* Faz o body ter no mínimo a altura da tela */
+            display: flex;
+            flex-direction: column;  /* Layout em coluna, header/conteúdo/footer empilhados */
+            margin: 0;    
+            font-family: "Poppins", sans-serif
+        }
+
+        /* Estilizando a navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            box-sizing: border-box; /* adiciona este */
+            flex-wrap: nowrap; /* impede quebra de linha */
+        }
+       
+        .navbar img {
+            width: 30px; /* tamanho da imagem */
+            height: 30px; /* tamanho da imagem */
+            margin-right: 20px; /* espaçamento à direita */
+            background-color: blue;
+            border: blue 2px solid; /* borda fina */
+            border-radius: 50%; /* borda arredondada */
+        }
+
+        .navbar-items-principais {
+            display: flex;
+            /* justify-content não necessário aqui, porque controle é feito via margin nos filhos */
+            align-items: center;
+        }
+
+        .navbar-items-principais p {
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .buttons p {
+            padding: 9px 15px;
+            border: 1.5px solid #000; /* linha fina */
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+            font-weight: 500;
+            font-family: "Poppins", sans-serif;
+            white-space: nowrap;
+        }
+
+        .box-content {
+            display: flex;
+            /* flex-direction: column; */
+            align-items: center;
+            justify-content: center;
+        }
+        .content-login {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; 
+            margin-top: 10%;
+            width: 535px;
+            height: 490px;           
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            input {
+                align-items: center;
+                width: 330px;
+                height: 40px;
+                border-radius: 10px;
+                background-color: #FFFFFF;
+            }
+        }
+        
+        .box-content h2 {
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            width: 100%;
+            font-weight: 700;
+            font-size: 50px;
+            font-style: bold;
+            line-height: 100%;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .box-content h6 {
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            width: 100%;
+            font-size: 18px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .content-login button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .footer {
+            margin-top: auto;
+            height: 60px;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .buttons-logar {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            
+            
+            /* width: 100%; */
+        }
+
+        .cadastro {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: blue;
+            color: #FFFFFF;
+            margin-right: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 92px;
+            height: 27px;
+            padding: 10px;
+            border: 1.5px solid #000; /* linha fina */
+            border-radius: 5px;
+        }
+
+        .logar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 92px;
+            height: 27px;
+            padding: 10px;
+            background-color: #FFFFFF;
+            color: #000;
+            border: 1.5px solid #000; /* linha fina */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="20" fill="#006FFF"/>
+            <path d="M10 16H11.3333V24H10V16ZM25 16H26.3333V24H25V16ZM13.6667 13H15V26.6667H13.6667V13ZM21.3333 13.3333H22.6667V26.6667H21.3333V13.3333ZM28.6667 13.3333H30V26.6667H28.6667V13.3333ZM17.3333 10H18.6667V30H17.3333V10Z" fill="white"/>
+            </svg>
+            
+        <div class="navbar-items-principais">
+            <p>Início</p>
+            <p>Historico</p>
+            <p>Contato</p>
+        </div>
+        <div  class="buttons">
+            <p id="loginButton">Login</p>
+        </div>
+        
+    </div>
+    <div class="box-content">
+        <div class="content-login">
+            <h2><strong>REGISTRO</strong></h2>
+            <h6>Logue para ter acesso completo a ferramenta</h6>
+            <form action="/login" method="post">
+                <label for="user">User</label><br>
+                <input type="text" id="user" name="user" required>
+                <br><br>
+                <label for="password"><strong>Senha</strong></label><br>
+                <input type="password" id="password" name="password" required>
+                <br><br>
+                <div class="buttons-logar">
+                    <div class="cadastro" type="submit">Cadastro</div>
+                    <div class="logar" id="loginButton2">Logar</div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="footer">
+        <p>
+            ©2025 Audio Converter - Todos os direitos reservados
+        </p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.querySelector('.browse-btn');
+
+        // Adicione este trecho para o redirecionamento
+        const loginButton = document.getElementById('loginButton');
+        if (loginButton) {
+            loginButton.addEventListener('click', function() {
+                window.location.href = 'login.html';
+            });
+        }
+
+        const loginButton2 = document.getElementById('loginButton2');
+        if (loginButton2) {
+            loginButton2.addEventListener('click', function() {
+                window.location.href = 'login.html';
+            });
+        }
+        // Prevenir comportamentos padrão para drag and drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Efeitos visuais ao arrastar arquivo
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropZone.classList.add('highlight');
+        }
+
+        function unhighlight() {
+            dropZone.classList.remove('highlight');
+        }
+
+        // Lidar com arquivos soltos
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        // Lidar com seleção via botão
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function() {
+            handleFiles(this.files);
+        });
+
+        // Função para processar os arquivos (será expandida posteriormente)
+        function handleFiles(files) {
+            if (files.length) {
+                const file = files[0];
+                
+                // Verificar se é um arquivo de áudio
+                if (!file.type.match('audio.*')) {
+                    alert('Por favor, selecione um arquivo de áudio.');
+                    return;
+                }
+                
+                console.log('Arquivo selecionado:', file.name);
+                
+                // Aqui você pode adicionar a lógica para enviar para a API
+                // uploadToAPI(file);
+                
+                // Feedback visual
+                dropZone.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <h1>Arquivo pronto para processamento</h1>
+                    <p>${file.name}</p>
+                    <button class="browse-btn">Selecionar outro arquivo</button>
+                `;
+                
+                // Re-adicionar o event listener ao novo botão
+                document.querySelector('.browse-btn').addEventListener('click', () => {
+                    fileInput.click();
+                });
+            }
+        }
+
+        // Função para enviar para a API (exemplo)
+        async function uploadToAPI(file) {
+            const formData = new FormData();
+            formData.append('audio', file);
+            
+            try {
+                const response = await fetch('SUA_API_AQUI', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                console.log('Resposta da API:', data);
+                
+                // Aqui você pode lidar com a resposta da API (ex: mostrar a transcrição)
+                
+            } catch (error) {
+                console.error('Erro ao enviar arquivo:', error);
+                alert('Ocorreu um erro ao enviar o arquivo.');
+            }
+        }
+    });
+    </script>
+</body>
+</html>
