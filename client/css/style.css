@@ -1,0 +1,451 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Reset CSS: isso deve estar fora de qualquer seletor */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+    background-color: #F8F9FA; /* corrigido */
+    min-height: 100vh;       /* Faz o body ter no mínimo a altura da tela */
+    display: flex;
+    flex-direction: column;  /* Layout em coluna, header/conteúdo/footer empilhados */
+    margin: 0;    
+    font-family: "Poppins", sans-serif
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+ /* Estilizando a navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box; /* adiciona este */
+    flex-wrap: nowrap; /* impede quebra de linha */
+}
+       
+.navbar img {
+    width: 30px; /* tamanho da imagem */
+    height: 30px; /* tamanho da imagem */
+    margin-right: 20px; /* espaçamento à direita */
+    background-color: blue;
+    border: blue 2px solid; /* borda fina */
+    border-radius: 50%; /* borda arredondada */
+}
+
+.navbar-items-principais {
+    display: flex;
+    /* justify-content não necessário aqui, porque controle é feito via margin nos filhos */
+    align-items: center;
+}
+
+.navbar-items-principais p {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.buttons p {
+    padding: 9px 15px;
+    border: 1.5px solid #000; /* linha fina */
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    user-select: none;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    white-space: nowrap;
+}
+.content {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+    /* width: 50%; */
+    /* background-color: blue; */
+}
+.content-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;;
+    width: 50%;
+    /* background-color: chartreuse; */
+}
+
+.content-box h1 {
+    font-size: 1.5em;
+    font-style: bold;
+}
+
+.content-box h6 {
+    font-size: 1em;
+    margin-top: 10px;
+    color: gray;
+}
+
+.actions-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    p{
+        margin: 10px;
+    }
+}
+.buttons-enviar p {
+    padding: 6px 15px;
+    border: 1.5px solid #000; /* linha fina */
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(0, 132, 255);
+    /* transition: background-color 0.3s ease, color 0.3s ease; */
+    user-select: none;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.footer {
+    margin-top: auto;
+    height: 60px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.upload-area {
+    width: 71%;
+    background-color: white;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #4a90e2;
+}
+
+.upload-area svg {
+    margin-bottom: 20px;
+    color: #4a90e2;
+}
+
+.upload-area h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.upload-area p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.upload-area .instructions {
+    margin: 20px 0;
+}
+
+.browse-btn {
+    background-color: #4a90e2;
+    color: white;
+    border: 1.5px solid #000; /* linha fina */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+
+}
+
+browse-btn:hover {
+    background-color: #3a7bc8;
+}
+
+/* Estilo quando arrastando arquivo sobre a área */
+.upload-area.highlight {
+    border-color: #4a90e2;
+    background-color: #f0f7ff;
+}
+
+.convert {
+    display: flex;
+    width: 80%;
+    input {
+        width: 100%;
+        height: 10vb;
+        font-weight: 400;
+        font-family: 'Poppins', Regular;
+        font-size: 16px;
+        padding-bottom: 50px;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #000000;
+        border-radius: 5px;
+    }
+}
+
+.progress-container {
+    /*Usar algum hook depois*/
+    display: none;
+    width: 80%;
+    height: 10px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4c7fef, #6b11cb);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    animation: loading 3s infinite;
+}
+
+@keyframes loading {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+.progress-text {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #555;
+    margin-top: 10px;
+}
+
+.box-content {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+}
+.content-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    margin-top: 10%;
+    width: 535px;
+    height: 490px;           
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    input {
+        align-items: center;
+        width: 330px;
+        height: 40px;
+        border-radius: 10px;
+        background-color: #FFFFFF;
+    }
+}
+        
+.box-content h2 {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    width: 100%;
+    font-weight: 700;
+    font-size: 50px;
+    font-style: bold;
+    line-height: 100%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.box-content h6 {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.content-login button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4F46E5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.footer {
+    margin-top: auto;
+    height: 60px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.buttons-logar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+            
+            
+    /* width: 100%; */
+}
+
+.cadastro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    color: #FFFFFF;
+    margin-right: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 92px;
+    height: 27px;
+    padding: 10px;
+    border: 1.5px solid #000; /* linha fina */
+    border-radius: 5px;
+}
+
+.logar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 92px;
+    height: 27px;
+    padding: 10px;
+    background-color: #FFFFFF;
+    color: #000;
+    border: 1.5px solid #000; /* linha fina */
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.content-hist {
+    display: flex;
+    margin-top: 5%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-hist h1 {
+    font-size: 36px;
+    font-family: 'Poppins', bold;
+    font-weight: 700;
+    /* color: #333; */
+    margin-bottom: 10px;
+}
+
+.content-hist h6 {
+    font-size: 18px;
+    font-family: 'Poppins', regular;
+    font-weight: 400;
+    color: #6B7280;
+    margin-bottom: 20px;
+}
+
+
+.box_historico {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    /* height: 737px; */
+    margin-top: 50px;
+    /* background-color: blue; */
+}
+.desenrola-bati-joga-de-ladinho {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* background-color: white; */
+}
+
+.aparecer {
+    display: block;
+}
+
+.hr-tag {
+    width: 100%;
+    height: 2px;
+    background-color: #8d8d8d;
+    border: none;
+}
+        
+.baixar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 136.87017822265625px;
+    height: 27px;
+    border: black;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #3B82F6;
+}
+
+.baixar p {
+    font-family: 'Poppins' Regular;
+    font-size: 18px;
+    font-weight: 400;
+            
+    color: #ffff;
+}
