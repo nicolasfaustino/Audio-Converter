@@ -1,0 +1,44 @@
+### 1. Cadastrar um novo usuário (deve funcionar)
+POST http://localhost:8080/api/accounts/cadastro
+Content-Type: application/x-www-form-urlencoded
+
+username=meu_usuario&password=senha_segura_123
+
+### =============================================
+
+### 2. Tentar cadastrar o MESMO usuário de novo (deve falhar)
+POST http://localhost:8080/api/accounts/cadastro
+Content-Type: application/x-www-form-urlencoded
+
+username=meu_usuario&password=senha_segura_123
+
+### =============================================
+
+### 3. Fazer login com os dados corretos (deve funcionar)
+POST http://localhost:8080/api/accounts/login
+Content-Type: application/x-www-form-urlencoded
+
+username=meu_usuario&password=senha_segura_123
+
+### =============================================
+
+### 4. Fazer login com a senha errada (deve falhar)
+POST http://localhost:8080/api/accounts/login
+Content-Type: application/x-www-form-urlencoded
+
+username=meu_usuario&password=senha_errada
+
+### =============================================
+
+### 5. Testar o upload de áudio
+# CUIDADO: Troque o caminho abaixo para um arquivo de áudio .wav VÁLIDO no seu computador.
+# O áudio precisa ser no formato WAV, 16kHz, mono.
+POST http://localhost:8080/api/audio/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="meu_audio.wav"
+
+< C:/caminho/para/seu/arquivo/de_audio.wav
+
+--boundary--
