@@ -1,0 +1,31 @@
+### 1. Cadastrar um novo usuário para o teste
+POST http://localhost:8080/api/accounts/cadastro
+Content-Type: application/x-www-form-urlencoded
+
+username=usuario_teste_historia&password=senha123
+
+### =============================================
+
+### 2. Enviar um áudio para ser transcrito por este usuário
+# IMPORTANTE:
+# 1. Troque o caminho abaixo para um arquivo de áudio .wav VÁLIDO no seu computador.
+# 2. O áudio deve estar no formato WAV, 16kHz, mono.
+POST http://localhost:8080/api/audio/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="username"
+
+usuario_teste_historia
+--boundary
+Content-Disposition: form-data; name="file"; filename="meu_audio_teste.wav"
+
+< C:/caminho/completo/para/seu/audio.wav
+
+--boundary--
+
+### =============================================
+
+### 3. Consultar o histórico do usuário (deve retornar a transcrição)
+# Note que o método agora é GET e o username vai na URL
+GET http://localhost:8080/api/accounts/historico/usuario_teste_historia
