@@ -542,3 +542,13 @@ browse-btn:hover {
     font-size: 0.8rem;
   }
 }
+
+.content-login h6 {
+  text-align: center;
+}
+
+/* Centralizar título e subtítulo do histórico */
+.content-hist h1,
+.content-hist h6 {
+  text-align: center;
+}
