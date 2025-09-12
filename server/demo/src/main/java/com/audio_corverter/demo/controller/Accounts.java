@@ -1,14 +1,18 @@
 package com.audio_corverter.demo.controller;
 
+import com.audio_corverter.demo.dto.TranscricaoDTO;
+import com.audio_corverter.demo.model.Transcricao;
 import com.audio_corverter.demo.model.Usuario;
+import com.audio_corverter.demo.repository.TranscricaoRepository;
 import com.audio_corverter.demo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,6 +23,9 @@ public class Accounts {
     // O Spring vai cuidar de instanciar e nos entregar este objeto.
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TranscricaoRepository transcricaoRepository;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam("username") String username, @RequestParam("password") String password) {
@@ -64,19 +71,40 @@ public class Accounts {
         }
     }
 
-    // TODO: A lógica do histórico virá aqui depois
-    @PostMapping("/historico")
-    public ResponseEntity<String> historico(@RequestParam("username") String username) {
+    @GetMapping("/historico/{username}")
+    public ResponseEntity<?> historico(@RequestParam("username") String username) {
         try {
-            String result = "Aprovado";
-            // TODO: LOGICA DE HISTORICO COM A DB
-            // 1. Buscar o usuário pelo 'username'
-            // 2. Usar o ID do usuário para buscar todas as suas transcrições no TranscricaoRepository
-            // 3. Retornar a lista de transcrições como JSON
+            var usuarioOpt = usuarioRepository.findByUsername(username);
+            if (usuarioOpt.isEmpty()) {
+                return ResponseEntity.status(404).body("Usuário não encontrado");
+            }
+            Usuario usuario = usuarioOpt.get();
 
-            return ResponseEntity.ok(result);
+            List<Transcricao> lista = transcricaoRepository.findByUsuario(usuario);
+
+            // Ordena por dataTranscricao (String no formato dd/MM/yyyy HH:mm:ss)
+            DateTimeFormatter BR = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+            Comparator<Transcricao> byDateDesc = Comparator.comparing(
+                    (Transcricao t) -> LocalDateTime.parse(t.getDataTranscricao(), BR)
+            ).reversed();
+
+            lista.sort(byDateDesc);
+
+            lista.sort(byDateDesc);
+            List<TranscricaoDTO> dtos = lista.stream()
+                    .map((Transcricao t) -> new TranscricaoDTO(
+                            t.getId(),
+                            t.getNomeArquivo(),
+                            t.getTextoTransito(),
+                            t.getDataTranscricao()
+                    ))
+                    .toList();
+
+            return ResponseEntity.ok(dtos);
+
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro ao processar áudio: " + e.getMessage());
+            return ResponseEntity.status(500).body("Erro ao buscar histórico: " + e.getMessage());
         }
     }
 }

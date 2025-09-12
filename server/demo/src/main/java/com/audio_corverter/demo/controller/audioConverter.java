@@ -1,5 +1,10 @@
 package com.audio_corverter.demo.controller;
 
+import com.audio_corverter.demo.model.Transcricao;
+import com.audio_corverter.demo.model.Usuario;
+import com.audio_corverter.demo.repository.TranscricaoRepository;
+import com.audio_corverter.demo.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -8,15 +13,30 @@ import org.vosk.Model;
 import org.vosk.Recognizer;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import static com.audio_corverter.demo.controller.to16kMonoPcm.ConvertFiles;
 
 @RestController
 @RequestMapping("/api/audio")
 public class audioConverter {
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TranscricaoRepository transcricaoRepository;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadAudio(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadAudio(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByUsername(username);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.status(404).body("Erro: Usuário não encontrado para salvar o histórico.");
+        }
+
+        Usuario usuario = usuarioOptional.get();
+
         try {
             System.out.println(file);
             // 1) Salva upload em arquivo temporário
@@ -41,6 +61,9 @@ public class audioConverter {
                 while ((n = in.read(buffer)) >= 0) {
                     recognizer.acceptWaveForm(buffer, n);
                 }
+
+                salvarTranscricao(file.getOriginalFilename(), recognizer.getFinalResult(), usuario);
+
                 return ResponseEntity.ok(recognizer.getFinalResult());
             }
 
@@ -49,6 +72,20 @@ public class audioConverter {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erro ao processar áudio: " + e.getMessage());
         }
+    }
+
+    private void salvarTranscricao(String nomeArquivo, String texto, Usuario usuario) {
+        Transcricao novaTranscricao = new Transcricao();
+        novaTranscricao.setNomeArquivo(nomeArquivo);
+        novaTranscricao.setTextoTransito(texto);
+        novaTranscricao.setUsuario(usuario);
+
+        // Define a data e hora atual no formato brasileiro
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        novaTranscricao.setDataTranscricao(dtf.format(LocalDateTime.now()));
+
+        transcricaoRepository.save(novaTranscricao);
+        System.out.println("Transcrição salva para o usuário: " + usuario.getUsername());
     }
 
     private static String getExt(String name) {
