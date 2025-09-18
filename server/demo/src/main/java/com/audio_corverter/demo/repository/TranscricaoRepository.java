@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface TranscricaoRepository extends JpaRepository<Transcricao, Long> {
 
-    // Busca todas as transcrições do usuário
     List<Transcricao> findByUsuario(Usuario usuario);
 }

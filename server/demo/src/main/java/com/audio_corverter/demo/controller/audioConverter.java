@@ -39,19 +39,15 @@ public class audioConverter {
 
         try {
             System.out.println(file);
-            // 1) Salva upload em arquivo temporário
             String ext = getExt(file.getOriginalFilename()); // ".mp3", ".wav", etc.
             System.out.println(ext);
             File uploaded = File.createTempFile("upload_", ext);
             file.transferTo(uploaded);
 
-            // 2) Converte para WAV PCM 16k mono
             File wav16k = ConvertFiles(uploaded);
 
-            // 3) Obtém diretório do modelo do classpath (funciona no IDE; em JAR prefira path externo)
             File modelDir = ResourceUtils.getFile("classpath:model/vosk-model-small-pt-0.3");
 
-            // 4) Reconhecimento
             try (InputStream in = new FileInputStream(wav16k);
                  Model model = new Model(modelDir.getAbsolutePath());
                  Recognizer recognizer = new Recognizer(model, 16000)) {
@@ -80,7 +76,6 @@ public class audioConverter {
         novaTranscricao.setTextoTransito(texto);
         novaTranscricao.setUsuario(usuario);
 
-        // Define a data e hora atual no formato brasileiro
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         novaTranscricao.setDataTranscricao(dtf.format(LocalDateTime.now()));
 
