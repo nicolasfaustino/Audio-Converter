@@ -316,7 +316,8 @@ browse-btn:hover {
     margin-top: 20px;
 }
 .content-login button {
-    width: 100%;
+    width: 150px;
+    height: 50px;
     padding: 10px;
     background-color: #4F46E5;
     color: white;
@@ -337,36 +338,42 @@ browse-btn:hover {
 .buttons-logar {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    margin: 10px;
-            
-            
-    /* width: 100%; */
 }
-
-.cadastro {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: blue;
-    color: #FFFFFF;
-    margin-right: 10px;
-    padding: 5px 10px;
+.cadastro button {
+    background-color: transparent;
+    border: none;
+    color: blue;
     cursor: pointer;
-    width: 92px;
-    height: 27px;
-    padding: 10px;
-    border: 1.5px solid #000; /* linha fina */
-    border-radius: 5px;
+    font-size: 18px;
+    text-decoration: underline;
+    margin-right: 10px;
+    width: 150px;
+    height: 50px;
 }
 
-.logar {
+.cadastro input {
+    width: 150px;
+    height: 50px;
+    padding: 10px;
+    border: 1.5px solid #000;
+    border-radius: 5px;
+    background-color: transparent;
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+    flex-shrink: 0;
+    box-sizing: border-box; /* Garante que padding e borda não alterem o tamanho */
+}
+
+
+.logar input{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 92px;
-    height: 27px;
+    width: 150px;
+    height: 50px;
     padding: 10px;
     background-color: #FFFFFF;
     color: #000;
