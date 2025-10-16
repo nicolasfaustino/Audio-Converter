@@ -15,7 +15,10 @@ import org.vosk.Recognizer;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static com.audio_corverter.demo.controller.to16kMonoPcm.ConvertFiles;
 
@@ -60,7 +63,20 @@ public class audioConverter {
 
                 salvarTranscricao(file.getOriginalFilename(), recognizer.getFinalResult(), usuario);
 
-                return ResponseEntity.ok(recognizer.getFinalResult());
+                List<Transcricao> lista = transcricaoRepository.findByUsuario(usuario);
+
+                DateTimeFormatter BR = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+                Comparator<Transcricao> byDateDesc = Comparator.comparing(
+                        (Transcricao t) -> LocalDateTime.parse(t.getDataTranscricao(), BR)
+                ).reversed();
+
+                lista.sort(byDateDesc);
+
+                System.out.println(lista.getFirst().getTextoTransito());
+                System.out.println(lista.getLast().getId());
+
+                return ResponseEntity.ok(lista.getFirst().getTextoTransito());
             }
 
         } catch (IllegalArgumentException iae) {

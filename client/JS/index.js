@@ -22,6 +22,7 @@ async function uploadToAPI(file) {
       body: formData,
       signal: controller.signal,
       headers: {
+        "Access-Control-Allow-Origin": "*",
         "Accept": "application/json",
       }, // Cabeçalhos básicos
     });
@@ -30,8 +31,9 @@ async function uploadToAPI(file) {
     if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
     const data = await response.json();
     console.log("Dados recebidos:", data);
-    if (data.transcription) {
-      document.querySelector('.convert input[type="text"]').value = data.transcription;
+    console.log("Texto transcrito:", data.text);
+    if (data.text) {
+      document.querySelector('.convert input[type="text"]').value = data.text;
     }
     alert("Upload concluído com sucesso!");
     return data;
@@ -136,17 +138,19 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await fetch(apiURL, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
           },
-          body: JSON.stringify({ username: user, password: password })
+          body: new URLSearchParams({
+            username: user,
+            password: password
+          })
         });
 
         if (!response.ok) {
           throw new Error(`Erro HTTP: ${response.status}`);
         }
 
-        const data = await response.json();
+        const data = await response.text();
         console.log("Dados do login:", data);
         localStorage.setItem("username", user); // Salva o username
 
@@ -176,17 +180,19 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await fetch(cadastroApiURL, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
           },
-          body: JSON.stringify({ username: user, password: password })
+          body: new URLSearchParams({
+            username: user,
+            password: password
+          })
         });
 
         if (!response.ok) {
           throw new Error(`Erro HTTP: ${response.status}`);
         }
 
-        const data = await response.json();
+        const data = await response.text();
         console.log("Dados do cadastro:", data);
 
         alert("Cadastro bem-sucedido!");

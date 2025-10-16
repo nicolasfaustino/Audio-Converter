@@ -57,7 +57,7 @@ public class Accounts {
         }
     }
 
-    @GetMapping("/historico/{username}")
+    @GetMapping("/historico")
     public ResponseEntity<?> historico(@RequestParam("username") String username) {
         try {
             var usuarioOpt = usuarioRepository.findByUsername(username);
