@@ -1,3 +1,5 @@
+const API_URL = "http://10.130.46.131:8080";
+
 // Função uploadToAPI fora do escopo para acesso global
 async function uploadToAPI(file) {
   console.log("Iniciando upload - Arquivo:", file.name, "Tipo:", file.type, "Tamanho:", file.size);
@@ -17,7 +19,7 @@ async function uploadToAPI(file) {
   const timeoutId = setTimeout(() => controller.abort(), 60000);
 
   try {
-    const response = await fetch("http://10.130.46.130:8080/api/audio/upload", {
+    const response = await fetch(`${API_URL}/api/audio/upload`, {
       method: "POST",
       body: formData,
       signal: controller.signal,
@@ -135,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // 🔹 Login
-  const apiURL = "http://10.130.46.130:8080/api/accounts/login";
+  const apiURL = `${API_URL}/api/accounts/login`;
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", async function (e) {
@@ -165,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // 🔹 Cadastro
-  const cadastroApiURL = "http://10.130.46.130:8080/api/accounts/cadastro";
+  const cadastroApiURL = `${API_URL}/api/accounts/cadastro`;
   const cadastroForm = document.getElementById("cadastroForm");
   if (cadastroForm) {
     cadastroForm.addEventListener("submit", async function (e) {
@@ -179,6 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       try {
+        console.log("Iniciando cadastro para usuário:", user);
         const response = await fetch(cadastroApiURL, {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -197,4 +200,120 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+    // Função para formatar a data no formato DD/MM/YYYY
+  function formatDate(isoDate) {
+    if (!isoDate) return "Data não disponível";
+    const date = new Date(isoDate);
+    return date.toLocaleDateString("pt-BR"); // Formato DD/MM/YYYY
+  }
+
+  // Novo método para buscar o histórico de transcrições
+  async function fetchHistorico() {
+    const username = localStorage.getItem("username");
+    if (!username) {
+      alert("Por favor, faça login para visualizar o histórico.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    const historicoApiURL = `${API_URL}/api/accounts/historico?username=${encodeURIComponent(username)}`;
+    const historicoContainer = document.querySelector(".aparecer");
+
+    if (historicoContainer) {
+      // Exibe o indicador de carregamento
+      historicoContainer.innerHTML = '<p class="loading">Carregando histórico...</p>';
+
+      try {
+        const response = await fetch(historicoApiURL, {
+          method: "GET",
+          headers: {
+            "Accept": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erro HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Histórico recebido:", data);
+
+        // Verifica se a resposta é um array
+        if (Array.isArray(data)) {
+          // Limpa o indicador de carregamento
+          historicoContainer.innerHTML = "";
+
+          // Verifica se há registros no histórico
+          if (data.length === 0) {
+            historicoContainer.innerHTML = '<p class="error">Nenhum histórico encontrado.</p>';
+            return;
+          }
+
+          // Itera sobre o array de históricos e adiciona ao DOM
+          data.forEach(item => {
+            console.log("Adicionando item ao histórico:", item);
+            const div = document.createElement("div");
+            div.className = "desenrola-bati-joga-de-ladinho";
+            div.innerHTML = `
+              <p>${item.nomeArquivo || "Nome não disponível"}</p>
+              <p>${item.dataTranscricao}</p>
+              <div class="baixar">
+                <p class="baixar-btn" data-id="${item.id}">Baixar</p>
+              </div>
+            `;
+            historicoContainer.appendChild(div);
+          });
+
+          document.querySelectorAll(".baixar-btn").forEach(button => {
+          button.addEventListener("click", async function () {
+            const id = this.getAttribute("data-id");
+            const filename = `arquivo_${id}.txt`; 
+
+            try {
+              const response = await fetch(`${API_URL}/api/accounts/getArchive?username=${encodeURIComponent(username)}&id=${encodeURIComponent(id)}`, {
+                method: "GET",
+                headers: {
+                  "Accept": "text/plain"
+                },
+              });
+
+              if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+
+              const text = await response.text();
+              const blob = new Blob([text], { type: "text/plain" });
+              const url = window.URL.createObjectURL(blob);
+
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = filename;
+              document.body.appendChild(a);
+              a.click();
+
+              a.remove();
+              window.URL.revokeObjectURL(url);
+            } catch (error) {
+              console.error("Erro ao baixar arquivo:", error);
+              alert("Erro ao baixar o arquivo: " + error.message);
+            }
+          });
+        });
+
+        } else {
+          throw new Error("Resposta do servidor não é um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar histórico:", error);
+        historicoContainer.innerHTML = '<p class="error">Erro ao carregar o histórico. Tente novamente mais tarde.</p>';
+      }
+    }
+  }
+
+  // Executa a função fetchHistorico se a página for historico_transacoes.html
+  if (window.location.pathname.includes("historico_transacoes.html")) {
+    fetchHistorico();
+  }
+
+  document.getElementById("loginButton2")?.addEventListener("click", () => window.location.href = "login.html");
+  document.getElementById("cadastroButton")?.addEventListener("click", () => window.location.href = "cadastro.html");
 });

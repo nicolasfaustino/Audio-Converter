@@ -57,6 +57,35 @@ public class Accounts {
         }
     }
 
+    @GetMapping("/getArchive")
+    public ResponseEntity<String> getArchive(@RequestParam("username") String username, @RequestParam("id") Long id) {
+        try {
+            var usuarioOpt = usuarioRepository.findByUsername(username);
+            if (usuarioOpt.isEmpty()) {
+                return ResponseEntity.status(404).body("Usuário não encontrado");
+            }
+            Usuario usuario = usuarioOpt.get();
+
+            List<Transcricao> lista = transcricaoRepository.findByUsuario(usuario);
+
+            Transcricao transcricao = null;
+
+            for (Transcricao info : lista) {
+                if (info.getId() == id) {
+                    transcricao = info;
+                }
+            }
+
+            if (transcricao == null) {
+                return ResponseEntity.status(404).body("Transcricao nao encontrada");
+            }
+
+            return ResponseEntity.ok(transcricao.getTextoTransito());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao buscar arquivo: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/historico")
     public ResponseEntity<?> historico(@RequestParam("username") String username) {
         try {
