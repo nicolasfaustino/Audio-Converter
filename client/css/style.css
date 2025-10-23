@@ -278,102 +278,84 @@ browse-btn:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center; 
-    margin-top: 10%;
-    width: 535px;
-    height: 490px;           
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    input {
-        align-items: center;
-        width: 330px;
-        height: 40px;
-        border-radius: 10px;
-        background-color: #FFFFFF;
-    }
-}
-        
-.box-content h2 {
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    width: 100%;
-    font-weight: 700;
-    font-size: 50px;
-    font-style: bold;
-    line-height: 100%;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-
-.box-content h6 {
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    width: 100%;
-    font-size: 18px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-.content-login button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4F46E5;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.footer {
-    margin-top: auto;
-    height: 60px;
+    margin-top: 8%;
+    width: 420px;
+    height: auto;           
+    padding: 40px;
     background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
+.content-login input {
+    width: 100%;
+    height: 45px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.content-login h2 {
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.content-login h6 {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Botões agrupados */
 .buttons-logar {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-            
-            
-    /* width: 100%; */
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
 }
 
-.cadastro {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: blue;
-    color: #FFFFFF;
-    margin-right: 10px;
-    padding: 5px 10px;
+/* Botão azul (Cadastrar / Entrar) */
+.buttons-logar .enviar-btn {
+    flex: 1;
+    background-color: #3B82F6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0;
     cursor: pointer;
-    width: 92px;
-    height: 27px;
-    padding: 10px;
-    border: 1.5px solid #000; /* linha fina */
-    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s;
 }
 
-.logar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 92px;
-    height: 27px;
-    padding: 10px;
-    background-color: #FFFFFF;
+.buttons-logar .enviar-btn:hover {
+    background-color: #2563eb;
+}
+
+/* Botão contorno preto (Logar / Voltar) */
+.buttons-logar .voltar-btn {
+    flex: 1;
+    background-color: transparent;
     color: #000;
-    border: 1.5px solid #000; /* linha fina */
-    border-radius: 5px;
+    border: 1.5px solid #000;
+    border-radius: 8px;
+    padding: 12px 0;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
 }
+
+.buttons-logar .voltar-btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
 
 
 .content-hist {
@@ -543,12 +525,139 @@ browse-btn:hover {
   }
 }
 
-.content-login h6 {
-  text-align: center;
+/* ======== ESTILO LOGIN E REGISTRO ======== */
+.login-container,
+.registro-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background-color: #f7f8fa;
 }
 
-/* Centralizar título e subtítulo do histórico */
-.content-hist h1,
-.content-hist h6 {
-  text-align: center;
+.login-box,
+.registro-box {
+    background-color: #fff;
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 380px;
+    width: 100%;
 }
+
+.login-box h2,
+.registro-box h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.login-box p,
+.registro-box p {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"],
+.registro-box input[type="text"],
+.registro-box input[type="password"],
+.registro-box input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.login-box input:focus,
+.registro-box input:focus {
+    border-color: #007bff;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-cadastrar,
+.btn-logar {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+.btn-cadastrar {
+    background-color: #2979ff;
+    color: #fff;
+    border: none;
+}
+
+.btn-cadastrar:hover {
+    background-color: #1b5fd4;
+}
+
+.btn-logar {
+    background-color: #fff;
+    color: #000;
+}
+
+.btn-logar:hover {
+    background-color: #f2f2f2;
+}
+
+
+/* ======== Ajustes Botões Login e Cadastro ======== */
+.form-container button {
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+  
+  .form-container .btn-login {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+  }
+  
+  .form-container .btn-login:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  
+  .form-container .btn-cadastro {
+    background-color: #2f6dff;
+    color: #ffffff;
+    border: 2px solid #2f6dff;
+  }
+  
+  .form-container .btn-cadastro:hover {
+    background-color: #1e54d0;
+  }
+  
+  /* Ajustes inputs para combinar */
+  .form-container input {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1.5px solid #dcdcdc;
+    outline: none;
+  }
+  
+  .form-container input:focus {
+    border-color: #2f6dff;
+  }

@@ -1,0 +1,23 @@
+POST http://localhost:8080/api/accounts/cadastro
+Content-Type: application/x-www-form-urlencoded
+
+username=usuario_teste_historia&password=senha123
+
+### =============================================
+
+POST http://localhost:8080/api/audio/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="nicolas"
+
+usuario_teste_historia
+--boundary
+Content-Disposition: form-data; name="file"; filename="audio.mp3"
+
+< C:\Users\nikit\OneDrive\Área de Trabalho\UP\Audio-Converter\server\audio.mp3
+
+--boundary--
+
+### =============================================
+GET http://localhost:8080/api/accounts/historico?username=nicolas

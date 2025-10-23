@@ -20,8 +20,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transcricao> transcricoes;
 
-    // Getters e Setters (muito importante adicioná-los)
-
     public Long getId() {
         return id;
     }
