@@ -17,6 +17,7 @@ async function uploadToAPI(file) {
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 60000);
+  const progressContainer = document.querySelector(".progress-container");
 
   try {
     const response = await fetch(`${API_URL}/api/audio/upload`, {
@@ -44,6 +45,8 @@ async function uploadToAPI(file) {
     console.error("Erro detalhado:", error.name, error.message);
     alert("Erro ao conectar com o servidor: " + error.message);
     return { error: error.message };
+  }finally {
+    if (progressContainer) progressContainer.style.display = "none";
   }
 }
 
