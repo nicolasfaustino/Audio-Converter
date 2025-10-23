@@ -661,3 +661,21 @@ browse-btn:hover {
   .form-container input:focus {
     border-color: #2f6dff;
   }
+
+.loading {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+.error {
+  text-align: center;
+  color: red;
+}
+.baixar-btn {
+  cursor: pointer;
+  color: #006FFF;
+  text-decoration: underline;
+}
+.baixar-btn:hover {
+  color: #004BBB;
+}
