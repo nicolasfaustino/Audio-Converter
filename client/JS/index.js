@@ -1,3 +1,5 @@
+const apiIp = "http://10.130.46.131:8080";
+
 // Função uploadToAPI fora do escopo para acesso global
 async function uploadToAPI(file) {
   console.log("Iniciando upload - Arquivo:", file.name, "Tipo:", file.type, "Tamanho:", file.size);
@@ -17,7 +19,7 @@ async function uploadToAPI(file) {
   const timeoutId = setTimeout(() => controller.abort(), 60000); // Aumentado para 60 segundos
 
   try {
-    const response = await fetch("http://10.130.46.130:8080/api/audio/upload", {
+    const response = await fetch(`${apiIp}/api/audio/upload`, {
       method: "POST",
       body: formData,
       signal: controller.signal,
@@ -126,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  const apiURL = "http://10.130.46.130:8080/api/accounts/login";
+  const apiURL = `${apiIp}/api/accounts/login`;
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", async function (e) {
@@ -163,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  const cadastroApiURL = "http://10.130.46.130:8080/api/accounts/cadastro";
+  const cadastroApiURL = `${apiIp}/api/accounts/cadastro`;
   const cadastroForm = document.getElementById("cadastroForm");
   if (cadastroForm) {
     cadastroForm.addEventListener("submit", async function (e) {
