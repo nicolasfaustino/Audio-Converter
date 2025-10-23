@@ -10,11 +10,11 @@ async function uploadToAPI(file) {
 
   const formData = new FormData();
   formData.append("username", username);
-  formData.append("file", file); // O filename é automaticamente incluído pelo File object
-  console.log("FormData entries:", Array.from(formData.entries())); // Log para verificar os campos
+  formData.append("file", file);
+  console.log("FormData entries:", Array.from(formData.entries()));
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 60000); // Aumentado para 60 segundos
+  const timeoutId = setTimeout(() => controller.abort(), 60000);
 
   try {
     const response = await fetch("http://10.130.46.130:8080/api/audio/upload", {
@@ -24,7 +24,7 @@ async function uploadToAPI(file) {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Accept": "application/json",
-      }, // Cabeçalhos básicos
+      },
     });
     clearTimeout(timeoutId);
     console.log("Resposta do servidor:", response.status, response.statusText);
@@ -46,19 +46,27 @@ async function uploadToAPI(file) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // 🔹 Navbar funcionando em todas as páginas
+  const loginButton = document.getElementById("loginButton");
+  if (loginButton) loginButton.addEventListener("click", () => window.location.href = "login.html");
+
+  const inicioButton = document.getElementById("inicioButton");
+  if (inicioButton) inicioButton.addEventListener("click", () => window.location.href = "home.html");
+
+  const historicoButton = document.getElementById("historicoButton");
+  if (historicoButton) historicoButton.addEventListener("click", () => window.location.href = "historico_transacoes.html");
+
+  const cadastroButton = document.getElementById("cadastroButton");
+  if (cadastroButton) cadastroButton.addEventListener("click", () => window.location.href = "cadastro.html");
+
+  const loginButton2 = document.getElementById("loginButton2");
+  if (loginButton2) loginButton2.addEventListener("click", () => window.location.href = "login.html");
+
+  // 🔹 Código de upload — executa apenas se existir dropZone
   const dropZone = document.getElementById("dropZone");
   if (dropZone) {
     const fileInput = document.getElementById("fileInput");
     const browseBtn = document.querySelector(".browse-btn");
-
-    const loginButton = document.getElementById("loginButton");
-    if (loginButton) loginButton.addEventListener("click", () => window.location.href = "login.html");
-
-    const inicioButton = document.getElementById("inicioButton");
-    if (inicioButton) inicioButton.addEventListener("click", () => window.location.href = "home.html");
-
-    const historicoButton = document.getElementById("historicoButton");
-    if (historicoButton) historicoButton.addEventListener("click", () => window.location.href = "historico_transacoes.html");
 
     ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) =>
       dropZone.addEventListener(eventName, preventDefaults, false)
@@ -126,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // 🔹 Login
   const apiURL = "http://10.130.46.130:8080/api/accounts/login";
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
@@ -137,23 +146,15 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         const response = await fetch(apiURL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: new URLSearchParams({
-            username: user,
-            password: password
-          })
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ username: user, password: password })
         });
 
-        if (!response.ok) {
-          throw new Error(`Erro HTTP: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
 
         const data = await response.text();
         console.log("Dados do login:", data);
-        localStorage.setItem("username", user); // Salva o username
-
+        localStorage.setItem("username", user);
         alert("Login bem-sucedido!");
         window.location.href = "home.html";
       } catch (error) {
@@ -163,6 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // 🔹 Cadastro
   const cadastroApiURL = "http://10.130.46.130:8080/api/accounts/cadastro";
   const cadastroForm = document.getElementById("cadastroForm");
   if (cadastroForm) {
@@ -179,22 +181,14 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         const response = await fetch(cadastroApiURL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: new URLSearchParams({
-            username: user,
-            password: password
-          })
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ username: user, password: password })
         });
 
-        if (!response.ok) {
-          throw new Error(`Erro HTTP: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
 
         const data = await response.text();
         console.log("Dados do cadastro:", data);
-
         alert("Cadastro bem-sucedido!");
         window.location.href = "login.html";
       } catch (error) {
@@ -203,7 +197,4 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  document.getElementById("loginButton2")?.addEventListener("click", () => window.location.href = "login.html");
-  document.getElementById("cadastroButton")?.addEventListener("click", () => window.location.href = "cadastro.html");
 });
