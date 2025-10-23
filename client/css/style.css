@@ -137,6 +137,7 @@ table {
     justify-content: space-around;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 10px;
     p{
         margin: 10px;
     }
