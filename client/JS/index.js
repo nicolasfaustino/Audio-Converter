@@ -20,14 +20,20 @@ async function uploadToAPI(file) {
   const progressContainer = document.querySelector(".progress-container");
   const browse_btn = document.querySelector(".browse-btn");
   const dropZone = document.getElementById("dropZone");
+  const inicio = document.getElementById("inicioButton");
+  const historico = document.getElementById("historicoButton");
+  const login = document.getElementById("loginButton");
+
 
   try {
     // Mostrar a barra de carregamento do upload
     if (progressContainer) progressContainer.style.display = "block";
 
-    //Bloqueia o botão de enviar
+    //Bloqueia os botões
     if (browse_btn) browse_btn.style.pointerEvents = "none";
-
+    if (inicio) inicio.style.pointerEvents = "none";
+    if (historico) historico.style.pointerEvents = "none";
+    if (login) login.style.pointerEvents = "none";
 
     // Bloquear arrastar e soltar
     dropZone.ondragover = (e) => e.preventDefault();
@@ -61,6 +67,9 @@ async function uploadToAPI(file) {
   }finally {
     if (progressContainer) progressContainer.style.display = "none";
     if (browse_btn) browse_btn.style.pointerEvents = "auto";
+    if (inicio) inicio.style.pointerEvents = "auto";
+    if (historico) historico.style.pointerEvents = "auto";
+    if (login) login.style.pointerEvents = "auto";
     dropZone.ondragover = null;
     dropZone.ondrop = null;
   }
