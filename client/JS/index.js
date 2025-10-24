@@ -18,8 +18,21 @@ async function uploadToAPI(file) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 60000);
   const progressContainer = document.querySelector(".progress-container");
+  const browse_btn = document.querySelector(".browse-btn");
+  const dropZone = document.getElementById("dropZone");
 
   try {
+    // Mostrar a barra de carregamento do upload
+    if (progressContainer) progressContainer.style.display = "block";
+
+    //Bloqueia o botão de enviar
+    if (browse_btn) browse_btn.style.pointerEvents = "none";
+
+
+    // Bloquear arrastar e soltar
+    dropZone.ondragover = (e) => e.preventDefault();
+    dropZone.ondrop = (e) => e.preventDefault();
+
     const response = await fetch(`${API_URL}/api/audio/upload`, {
       method: "POST",
       body: formData,
@@ -47,6 +60,9 @@ async function uploadToAPI(file) {
     return { error: error.message };
   }finally {
     if (progressContainer) progressContainer.style.display = "none";
+    if (browse_btn) browse_btn.style.pointerEvents = "auto";
+    dropZone.ondragover = null;
+    dropZone.ondrop = null;
   }
 }
 

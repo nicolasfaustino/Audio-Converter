@@ -202,6 +202,7 @@ table {
     border: 1.5px solid #000; /* linha fina */
     border-radius: 5px;
     cursor: pointer;
+    pointer-events: auto;
     font-size: 1rem;
     transition: background-color 0.3s;
 
