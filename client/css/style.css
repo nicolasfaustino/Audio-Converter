@@ -681,3 +681,40 @@ browse-btn:hover {
 .baixar-btn:hover {
   color: #004BBB;
 }
+
+/* Mantém o mesmo tamanho para evitar deslocamento na navbar */
+.buttons {
+  width: 160px; /* ajusta esse valor se necessário */
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Estilo do texto e alinhamento do login/logado */
+#loginButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Botão de sair */
+#logout-btn {
+  background-color: #ff4b4b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#logout-btn:hover {
+  background-color: #d93636;
+}

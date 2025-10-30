@@ -345,3 +345,27 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("loginButton2")?.addEventListener("click", () => window.location.href = "login.html");
   document.getElementById("cadastroButton")?.addEventListener("click", () => window.location.href = "cadastro.html");
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const username = localStorage.getItem("username");
+  const loginButton = document.getElementById("loginButton");
+
+  if (loginButton) {
+    if (username) {
+      loginButton.innerHTML = `Logado: <strong>${username}</strong> <button id="logout-btn">Sair</button>`;
+      loginButton.style.cursor = "default";
+
+      const logoutBtn = document.getElementById("logout-btn");
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("username");
+        window.location.href = "login.html";
+      });
+    } else {
+      loginButton.textContent = "Login";
+      loginButton.style.cursor = "pointer";
+      loginButton.addEventListener("click", () => {
+        window.location.href = "login.html";
+      });
+    }
+  }
+});
